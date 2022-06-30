@@ -1,5 +1,5 @@
 # aries-cloudapi-apim
-This is a API Gateway for [Aries Cloud API](https://github.com/didx-xyz/aries-cloudapi-python). It acts as a wrapper around the Aries Cloud API and removes the burden of storing & managing api-keys for tenants from developers. It is intended to be used by comsumers implementing the [Aries-CloudAPI-Dotnet](http://) .NET SDK. 
+This is a API Gateway for [Aries Cloud API](https://github.com/didx-xyz/aries-cloudapi-python). It acts as a wrapper around the Aries Cloud API and removes the burden of storing & managing api-keys for tenants from developers. It is intended to be used by consumers implementing the [Aries-CloudAPI-Dotnet](http://) .NET SDK. 
 
 The solution utilizes [Kong](https://github.com/Kong/kong) for an API Gateway & [Konga](https://github.com/pantsel/konga) for an administration UI. 
 
@@ -23,8 +23,8 @@ It also includes a custom Kong plugin called `tenant-keyapi` that handles the ap
 6) Remove sensitive data from response e.g access tokens (response-transformer plugin)
 
 # Setup Kong + Konga using Docker compose
-This repository was oringially forked from [here](https://github.com/vousmeevoyez/kong-konga-example) so many thanks to the author!
-Checkout the oringinal article [here](https://dev.to/vousmeevoyez/setup-kong-konga-part-2-dan)
+This repository was originally forked from [here](https://github.com/vousmeevoyez/kong-konga-example) so many thanks to the author!
+Checkout the original article [here](https://dev.to/vousmeevoyez/setup-kong-konga-part-2-dan)
 
 # Configuration
 ## Setup Kong LoopBack
