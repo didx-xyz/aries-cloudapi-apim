@@ -14,15 +14,15 @@ It also includes a custom Kong plugin called `tenant-keyapi` that handles the ap
 1) Consumers send HTTP Requests with the following HTTP headers:
 - apikey: kong comsumer api key (key-auth plugin)
 - tenant-id: `{ARIES_CLOUDAPI_TENANT_ID}` --or-- `{ARIES_CLOUDAPI_ROLE_NAME}`
-* {ARIES_CLOUDAPI_TENANT_ID} - tenant id of issuer/verifier/holder
-* {ARIES_CLOUDAPI_ROLE_NAME} - role name e.g governance or tenant-admin
+* `{ARIES_CLOUDAPI_TENANT_ID}` - tenant id of issuer/verifier/holder
+* `{ARIES_CLOUDAPI_ROLE_NAME}` - role name e.g governance or tenant-admin
 2) Consumers are authenticated using the `apikey` header (key-auth plugin)
-3) The access_token for `tenant-id` is retrieved from the aries-cloud-api (tenant-api plugin)
-4) access_token is cached in local session state (not persisted)
+3) The `access_token` for `tenant-id` is retrieved from the aries-cloud-api (tenant-api plugin)
+4) The `access_token` is cached in local session state (not persisted)
 5) Sends original HTTP request
     5.1) Removes `apikey` & `tenant-id` headers
     5.2) Adds `x-api-key` header with access_token from 3)
-6) Remove sensitive data from response e.g access tokens (response-transformer plugin)
+6) Remove sensitive data from response e.g `access_token` (response-transformer plugin)
 
 # Setup Kong + Konga using Docker compose
 This repository was originally forked from [here](https://github.com/vousmeevoyez/kong-konga-example) so many thanks to the author!
@@ -51,7 +51,7 @@ curl --location --request POST 'http://localhost:8001/consumers/846f2bcc-bb99-40
 ```
 
 ## Manual Steps
-- Create User. See [Image1](/Screen Shot 2020-12-03 at 07.28.18.png)
+- Create User. See [Image1](%2FScreen%20Shot%202020-12-03%20at%2007.28.18.png)
 - Update connection. See [Image2](/setup.png)
 
 ## Create Aries Cloud API service
