@@ -13,7 +13,9 @@ It also includes a custom Kong plugin called `tenant-keyapi` that handles the ap
 
 1) Consumers send HTTP Requests with the following HTTP headers:
 - apikey: kong comsumer api key (key-auth plugin)
-- tenant-id: `{ARIES_CLOUDAPI_TENANT_ID}` e.g tenant id of issuer/verifier/holder -- or -- `{ARIES_CLOUDAPI_ROLE_NAME}` e.g governance or tenant-admin
+- tenant-id: `{ARIES_CLOUDAPI_TENANT_ID}` --or-- `{ARIES_CLOUDAPI_ROLE_NAME}`
+-- {ARIES_CLOUDAPI_TENANT_ID} - tenant id of issuer/verifier/holder
+-- {ARIES_CLOUDAPI_ROLE_NAME} - role name e.g governance or tenant-admin
 2) Consumers are authenticated using the `apikey` header (key-auth plugin)
 3) The access_token for `tenant-id` is retrieved from the aries-cloud-api (tenant-api plugin)
 4) access_token is cached in local session state (not persisted)
@@ -30,8 +32,6 @@ Checkout the original article [here](https://dev.to/vousmeevoyez/setup-kong-kong
 ## Setup Kong LoopBack
 ```
 curl --location --request POST 'http://localhost:8001/services/' --header 'Content-Type: application/json' --data-raw '{ "name": "admin-api", "host": "localhost", "port": 8001 }'
-```
-```
 curl --location --request POST 'http://localhost:8001/services/admin-api/routes' --header 'Content-Type: application/json' --data-raw '{ "paths": ["/admin-api"] }'
 ```
 
@@ -50,7 +50,9 @@ curl --location --request POST 'http://localhost:8001/consumers/' --form 'userna
 curl --location --request POST 'http://localhost:8001/consumers/846f2bcc-bb99-40fd-a2fa-68d0e17917ba/key-auth'
 ```
 
-## See Image
+## Manual Steps
+- Create User. See [Image1](/Screen Shot 2020-12-03 at 07.28.18.png)
+- Update connection. See [Image2](/setup.png)
 
 ## Create Aries Cloud API service
 ```
@@ -67,7 +69,7 @@ curl -X POST http://localhost:8001/services/ariescloudapi-service/plugins --data
 ## Enable Response Transformer Plugin
 curl -X POST http://localhost:8001/services/ariescloudapi-service/plugins --data "name=response-transformer" --data "config.remove.json=access_token"
 
-# Enable Tenant Api Key Plugin
+## Enable Tenant Api Key Plugin
 ```
 curl -i -X POST --url http://localhost:8001/services/ariescloudapi-service/plugins/ --data 'name=tenant-apikey' --data 'config.keys.governance=governance.adminApiKey' --data 'config.keys.tenantadmin=tenant-admin.adminApiKey' --data 'config.ariescloudurl={ARIES_CLOUD_API_URL}'
 ```
