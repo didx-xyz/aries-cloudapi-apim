@@ -14,8 +14,8 @@ It also includes a custom Kong plugin called `tenant-keyapi` that handles the ap
 1) Consumers send HTTP Requests with the following HTTP headers:
 - apikey: kong comsumer api key (key-auth plugin)
 - tenant-id: `{ARIES_CLOUDAPI_TENANT_ID}` --or-- `{ARIES_CLOUDAPI_ROLE_NAME}`
--- {ARIES_CLOUDAPI_TENANT_ID} - tenant id of issuer/verifier/holder
--- {ARIES_CLOUDAPI_ROLE_NAME} - role name e.g governance or tenant-admin
+* {ARIES_CLOUDAPI_TENANT_ID} - tenant id of issuer/verifier/holder
+* {ARIES_CLOUDAPI_ROLE_NAME} - role name e.g governance or tenant-admin
 2) Consumers are authenticated using the `apikey` header (key-auth plugin)
 3) The access_token for `tenant-id` is retrieved from the aries-cloud-api (tenant-api plugin)
 4) access_token is cached in local session state (not persisted)
