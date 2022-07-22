@@ -87,4 +87,4 @@ volumes:
 
 networks:
   kong-net:
-    external: true
+    #external: true
