@@ -29,24 +29,29 @@ This repository was originally forked from [here](https://github.com/vousmeevoye
 Checkout the original article [here](https://dev.to/vousmeevoyez/setup-kong-konga-part-2-dan)
 
 # Configuration
-## Setup Kong LoopBack
+```bash
+cp .env.sample .env
 ```
+## Setup Kong LoopBack
+```bash
 curl --location --request POST 'http://localhost:8001/services/' --header 'Content-Type: application/json' --data-raw '{ "name": "admin-api", "host": "localhost", "port": 8001 }'
 curl --location --request POST 'http://localhost:8001/services/admin-api/routes' --header 'Content-Type: application/json' --data-raw '{ "paths": ["/admin-api"] }'
 ```
 
 ## Enable Key Auth Plugin
-```
+```bash
 curl -X POST http://localhost:8001/services/admin-api/plugins --data "name=key-auth" 
 ```
 
 ## Add Konga as Consumer
-```
+```bash
 curl --location --request POST 'http://localhost:8001/consumers/' --form 'username=konga' --form 'custom_id=cebd360d-3de6-4f8f-81b2-31575fe9846a'
 ```
 
 ## Create API Key for Konga
-```
+```bash
+curl --location --request POST 'http://localhost:8001/consumers/<id of preveious operation response>/key-auth'
+# Example
 curl --location --request POST 'http://localhost:8001/consumers/846f2bcc-bb99-40fd-a2fa-68d0e17917ba/key-auth'
 ```
 
@@ -55,35 +60,37 @@ curl --location --request POST 'http://localhost:8001/consumers/846f2bcc-bb99-40
 - Update connection. See [Image2](/setup.png)
 
 ## Create Aries Cloud API service
-```
+```bash
 curl -i -X POST --url http://localhost:8001/services/ --data 'name=ariescloudapi-service' --data 'url={ARIES_CLOUD_API_URL}'  
 curl -i -X POST --url http://localhost:8001/services/ariescloudapi-service/routes -d 'paths[]=/api'  
 ```
 _{ARIES_CLOUD_API_URL} refers to the url of the Aries Cloud API e.g http://localhost:8100_
 
 ## Enable Key Auth Plugin
-```
+```bash
 curl -X POST http://localhost:8001/services/ariescloudapi-service/plugins --data "name=key-auth" 
 ```
 
 ## Enable Response Transformer Plugin
+```bash
 curl -X POST http://localhost:8001/services/ariescloudapi-service/plugins --data "name=response-transformer" --data "config.remove.json=access_token"
+```
 
 ## Enable Tenant Api Key Plugin
-```
+```bash
 curl -i -X POST --url http://localhost:8001/services/ariescloudapi-service/plugins/ --data 'name=tenant-apikey' --data 'config.keys.governance=governance.adminApiKey' --data 'config.keys.tenantadmin=tenant-admin.adminApiKey' --data 'config.ariescloudurl={ARIES_CLOUD_API_URL}'
 ```
 _{ARIES_CLOUD_API_URL} refers to the url of the Aries Cloud API e.g http://localhost:8100_
 
 ## Add Consumer
-```
+```bash
 curl --location --request POST 'http://localhost:8001/consumers/' --form 'username={consumer_name}' --form 'custom_id=B51BB602-A28F-4177-B45D-8C3CA91F1F64'
 ```
 _{consumer_name} refers to a consumer name e.g "ExampleConsumer"_
 _note the {consumer_id} returned in the response_
 
 ## Create API Key for Consumer
-```
+```bash
 curl --location --request POST 'http://localhost:8001/consumers/{consumer_id}/key-auth'
 ```
 _{consumer_id} refers to the id of the consumer created above_
@@ -93,7 +100,7 @@ Consumers can now call the API endpoints using the `/api` route configured above
 
 For example:
 
-```
+```bash
 curl -X 'GET' -H "apikey: {APIKEY}" -H "tenant-id: tenant-admin" http://localhost:8000/api/admin/tenants/
 ```
 
