@@ -50,7 +50,7 @@ services:
         KONG_ADMIN_ERROR_LOG: ${KONG_ADMIN_ERROR_LOG}
         KONG_ADMIN_LISTEN: ${KONG_ADMIN_LISTEN}
         KONG_CUSTOM_PLUGINS: tenant-apikey
-        KONG_PLUGINS: key-auth,tenant-apikey,response-transformer #,kong-path-allow
+        KONG_PLUGINS: key-auth,tenant-apikey,response-transformer,bundled #,kong-path-allow
       restart: on-failure
       ports:
       - $KONG_PROXY_PORT:8000
