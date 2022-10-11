@@ -106,3 +106,28 @@ curl -X 'GET' -H "apikey: {APIKEY}" -H "tenant-id: tenant-admin" http://localhos
 
 See [Aries Cloud API](https://github.com/didx-xyz/aries-cloudapi-python) for the API specification.
 
+# Configure SSL certificates for Kong APIs
+Follow the guide located [here](https://tech.aufomm.com/how-to-use-kong-acme-plugin/) to enable the Acme Plugin that allows you to use LetsEncrypt certificates to protect API endpoints. This is required if you want to use OAuth2 etc.
+
+## .env file changes
+The following values must be added/changed in the .env file to make the plugin work and receive a certificate from LetsEncrypt:
+
+**Change:**
+
+`KONG_PROXY_PORT=80`
+
+`KONG_PROXY_SSL_PORT=443`
+
+**Add:**
+
+`# KONG ACME LETSENCRYPT SETTING`
+
+`KONG_LUA_SSL_TRUSTED_CERTIFICATE=system`
+
+## docker-compose.yml changes
+And the following changes are required in `docker-compose.yml` under the `kong` service:
+
+**Add:**
+
+`KONG_LUA_SSL_TRUSTED_CERTIFICATE: system`. 
+
